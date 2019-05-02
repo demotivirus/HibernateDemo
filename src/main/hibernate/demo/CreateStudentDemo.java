@@ -21,15 +21,20 @@ public class CreateStudentDemo {
         try{
 
             //Create object
+            System.out.println("Creating new object...");
 
+            Student student = new Student("Peter", "Wallker", "peter@gmail.com");
 
             //Start transaction
-
+            session.beginTransaction();
 
             //Save  the object
-
+            session.save(student);
 
             //Commit transaction
+            session.getTransaction().commit();
+
+            System.out.println("Done!");
 
         } finally {
             sessionFactory.close();
