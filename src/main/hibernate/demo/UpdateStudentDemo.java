@@ -5,7 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class ReadStudentDemo {
+public class UpdateStudentDemo {
 
     public static void main(String[] args) {
 
@@ -15,37 +15,34 @@ public class ReadStudentDemo {
                 .addAnnotatedClass(Student.class)
                 .buildSessionFactory();
 
-        //Create session
+
+        // create session
         Session session = sessionFactory.getCurrentSession();
 
         try{
 
-            //Creating object
-            System.out.println("Creating new object...");
+            int studentId = 1;
 
-            Student student1 = new Student("Andrew", "Norton", "andrewNorton@gmail.com");
-
-            //Start transaction
+            session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            //Save the object
-            session.save(student1);
+            System.out.println("\nGetting student with id: " + studentId);
+
+            Student student = session.get(Student.class, studentId);
+
+            System.out.println("Updating the student...");
+            student.setFirstName("Nana");
 
             //Commit transaction
             session.getTransaction().commit();
 
-            System.out.println("Saving student by id: " + student1.getId());
-            System.out.println("Done!");
-
-            //New transaction
             session = sessionFactory.getCurrentSession();
             session.beginTransaction();
 
-            System.out.println("\nGetting student with id: " + student1.getId());
-            Student myStudent = session.get(Student.class, student1.getId());
-            System.out.println("Get complete: " + myStudent);
+            //New update
+            System.out.println("Update email for all students");
+            session.createQuery("update Student set email='student@lib.com'").executeUpdate();
 
-            //Commit transaction
             session.getTransaction().commit();
 
             System.out.println("Done!");
