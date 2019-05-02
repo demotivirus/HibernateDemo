@@ -37,6 +37,10 @@ public class QueryStudentDemo {
             System.out.println("\n\nStudents who last name of Walker:\n");
             displayTheStudents(students);
 
+            students = session.createQuery("from Student s where s.email like '%gmail.com'").getResultList();
+            System.out.println("\n\nStudents who have email @gmail.com");
+            displayTheStudents(students);
+
             //Commit transaction
             session.getTransaction().commit();
 
